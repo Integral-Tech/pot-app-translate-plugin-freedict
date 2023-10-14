@@ -27,11 +27,15 @@ pub fn translate(
 
         for item in phonetics.as_array()? {
             let audio_url = item.get("audio")?.as_str()?;
-            if audio_url.is_empty() {
-                continue;
-            }
+            let (region, voice);
 
-            let region = audio_url.get((audio_url.len() - 6)..(audio_url.len() - 4))?;
+            if audio_url.is_empty() {
+                region = "";
+                voice = vec![];
+            } else {
+                region = audio_url.get((audio_url.len() - 6)..(audio_url.len() - 4))?;
+                voice = client.get(audio_url).send().ok()?.bytes().ok()?.to_vec();
+            };
 
             let symbol = if let Some(text) = item.get("text") {
                 text.as_str()?
@@ -39,7 +43,6 @@ pub fn translate(
                 ""
             };
 
-            let voice = client.get(audio_url).send().ok()?.bytes().ok()?.to_vec();
             pronunciations.push(json!({
             "region": region,
             "symbol": symbol,
