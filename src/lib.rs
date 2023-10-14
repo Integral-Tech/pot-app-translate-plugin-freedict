@@ -28,17 +28,17 @@ pub fn translate(
         for item in phonetics.as_array()? {
             let audio_url = item.get("audio")?.as_str()?;
             if audio_url.is_empty() {
-                break;
+                continue;
             }
 
             let region = audio_url.get((audio_url.len() - 6)..(audio_url.len() - 4))?;
 
-	    let symbol = if let Some(text) = item.get("text") {
-		text.as_str()?
-	    } else {
-		""
-	    };
-	    
+            let symbol = if let Some(text) = item.get("text") {
+                text.as_str()?
+            } else {
+                ""
+            };
+
             let voice = client.get(audio_url).send().ok()?.bytes().ok()?.to_vec();
             pronunciations.push(json!({
             "region": region,
