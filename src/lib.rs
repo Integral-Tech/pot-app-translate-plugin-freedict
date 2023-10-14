@@ -32,14 +32,12 @@ pub fn translate(
             }
 
             let region = audio_url.get((audio_url.len() - 6)..(audio_url.len() - 4))?;
-
             let symbol = match item.get("text") {
                 Some(_) => item.get("text")?.as_str()?,
                 None => "",
             };
 
             let voice = client.get(audio_url).send().ok()?.bytes().ok()?.to_vec();
-
             pronunciations.push(json!({
             "region": region,
             "symbol": symbol,
@@ -55,29 +53,28 @@ pub fn translate(
             for definition in definitions {
                 explains.push(definition.get("definition")?.as_str()?);
 
-                let example = match definition.get("example") {
-                    Some(_) => definition.get("example")?.as_str()?,
-                    None => "",
+                if let Some(_) = definition.get("example") {
+                    let example = definition.get("example")?.as_str()?;
+                    sentence.push(json!({
+                    "source": example,
+                    "target": "",
+                    }));
                 };
-
-                let synonyms = item
-                    .get("synonyms")?
-                    .as_array()?
-                    .into_iter()
-                    .map(|x| x.as_str().unwrap())
-                    .collect::<Vec<_>>();
-
-                associations.extend(synonyms);
-                sentence.push(json!({
-                "source": example,
-                "target": "",
-                }));
             }
 
             explanations.push(json!({
             "trait": _trait,
             "explains": explains,
             }));
+
+            let synonyms = item
+                .get("synonyms")?
+                .as_array()?
+                .into_iter()
+                .map(|x| x.as_str().unwrap())
+                .collect::<Vec<_>>();
+
+            associations.extend(synonyms);
         }
 
         Some(json!({
