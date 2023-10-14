@@ -32,11 +32,13 @@ pub fn translate(
             }
 
             let region = audio_url.get((audio_url.len() - 6)..(audio_url.len() - 4))?;
-            let symbol = match item.get("text") {
-                Some(_) => item.get("text")?.as_str()?,
-                None => "",
-            };
 
+	    let symbol = if let Some(text) = item.get("text") {
+		text.as_str()?
+	    } else {
+		""
+	    };
+	    
             let voice = client.get(audio_url).send().ok()?.bytes().ok()?.to_vec();
             pronunciations.push(json!({
             "region": region,
