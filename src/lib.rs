@@ -53,10 +53,9 @@ pub fn translate(
             for definition in definitions {
                 explains.push(definition.get("definition")?.as_str()?);
 
-                if let Some(_) = definition.get("example") {
-                    let example = definition.get("example")?.as_str()?;
+                if let Some(example) = definition.get("example") {
                     sentence.push(json!({
-                    "source": example,
+                    "source": example.as_str()?,
                     "target": "",
                     }));
                 };
