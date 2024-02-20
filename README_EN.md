@@ -6,7 +6,7 @@ SPDX-License-Identifier: GPL-3.0-or-later
 
 # Free Dictionary API Plugin for Pot-App
 
-[中文](https://github.com/Integral-Tech/pot-app-translate-plugin-freedict/) | English
+[中文](README.md) | English
 
 - English-English Dictionary
 - No API Key Required
