@@ -11,3 +11,6 @@ SPDX-License-Identifier: GPL-3.0-or-later
 - English-English Dictionary
 - No API Key Required
 - The Repository of Free Dictionary API: https://github.com/meetDeveloper/freeDictionaryAPI
+
+## License
+- Licensed under the [GNU General Public License, version 3 or any later version](LICENSES/GPL-3.0-or-later.txt).
