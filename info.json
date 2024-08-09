@@ -1,5 +1,5 @@
 {
-  "id": "[plugin].cn.org.integral.freedict",
+  "id": "plugin.page.codeberg.integral.freedict",
   "plugin_type": "translate",
   "icon": "freedict.ico",
   "display": "Free Dictionary API",
